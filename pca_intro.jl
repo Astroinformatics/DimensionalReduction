@@ -16,9 +16,6 @@ end
 
 # ╔═╡ 69cd367a-959e-11ec-1d11-dbb242dc1861
 begin
-	using Pkg
-	Pkg.activate(".")
-
 	using LinearAlgebra
 	using Markdown
 	using MultivariateStats
