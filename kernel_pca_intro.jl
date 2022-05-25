@@ -27,7 +27,7 @@ end
 
 # ╔═╡ eaf77309-f4de-44e0-887c-c80bb8836782
 md"""
-# Lab N: Dimesional Reduction $br Intro to Kernel PCA
+# Lab 7: Dimesional Reduction $br Intro to Kernel PCA
 ### [Penn State Astroinformatics Summer School 2022](https://sites.psu.edu/astrostatistics/astroinfo-su22-program/)
 ### Kadri Nizam 
 """

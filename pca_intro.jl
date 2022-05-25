@@ -343,7 +343,7 @@ br = html"<br />";
 
 # ╔═╡ a53948d8-9deb-4802-9ab9-151e3f938070
 md"""
-# Lab N: Dimesional Reduction: $br Intro to PCA
+# Lab 6: Dimesional Reduction: $br Intro to PCA
 #### [Penn State Astroinformatics Summer School 2022](https://sites.psu.edu/astrostatistics/astroinfo-su22-program/)
 #### Kadri Nizam & [Eric Ford](https://www.personal.psu.edu/ebf11)
 """
