@@ -24,7 +24,7 @@ begin
 	using PlutoUI
 	using Random
 	using Statistics
-	
+
 	using CSV
 	import DataFrames:DataFrame, Not, names, select
 
@@ -36,7 +36,7 @@ end;
 md"""
 ### Overivew
 
-In this lesson, we'll explore what happens when we use PCA to transforms the high-${z}$ quaesar dataset from the previous regression labs.  
+In this lesson, we'll explore what happens when we use PCA to transforms the high-${z}$ quasar dataset from the previous regression labs.  
 """
 
 # ╔═╡ d2424607-7e22-49a9-ae6f-212364dffa44
@@ -59,7 +59,7 @@ corner(df_no_label)
 
 # ╔═╡ 4aab52ce-b12b-428c-82f2-576c6d5b22a9
 md"""
-Below, you can pick a pair of colors to view up close and color code by the lable.  Red points are high-${z}$ quaesars and blue points are other objects.
+Below, you can pick a pair of colors to view up close and color code by the label.  Red points are high-${z}$ quasars and blue points are other objects.
 """
 
 # ╔═╡ 72e1d9bb-d466-433e-93f2-ec8b24e95fc3
@@ -86,7 +86,7 @@ begin
 end;
 
 # ╔═╡ 8a169904-9dd7-4981-a371-3315f93105b6
-corner(DataFrame([view(Xₜ_vanilla, i, :) for i in 1:size(Xₜ_vanilla, 1)], 
+corner(DataFrame([view(Xₜ_vanilla, i, :) for i in 1:size(Xₜ_vanilla, 1)],
 	             ["PCS " * string(i) for i in 1:size(Xₜ_vanilla,1)])  )
 
 # ╔═╡ ec982b00-217e-45f8-9f49-078ace6798e0
@@ -109,17 +109,17 @@ md"γ (Exponent for radial basis function): $(@bind kpca_gamma confirm(NumberFie
 md"## Fit SVM classifers"
 
 # ╔═╡ 7ff72df3-eb8d-401a-8d22-70c2180c3562
-md"First, we'll fit an SVM classifier using the raw data and use it to predict the labels for our dataset. 
+md"First, we'll fit an SVM classifier using the raw data and use it to predict the labels for our dataset.
 (Note that by default, the 'SVC' function uses a radial basis kernel.  Since we want to compare the performance of the SVM using different inputs, we'll specify that the SVM should use a linear kernel.)"
 
 # ╔═╡ 98bcdb6b-cb0f-487d-8d45-d1d401e38acb
-begin 
+begin
 	svm_raw = fit!(SVC(kernel=Kernel.Linear), data_train', labels_train)  
 	ŷ_svm_raw = LIBSVM.predict(svm_raw, data_test')   # Predict the labels for data
 end;
 
 # ╔═╡ 3743a33f-f9da-4e59-9960-8c2220abfdfc
-md"To evaluate the classifier, we'll evaluate the model based on calculating the fraction of actual high-${z}$ quaesars missed (false negative rate) and the fraction of other objects mistakenly labeled as high-${z}$ quaesars (false positive rate)."
+md"To evaluate the classifier, we'll evaluate the model based on calculating the fraction of actual high-${z}$ quasars missed (false negative rate) and the fraction of other objects mistakenly labeled as high-${z}$ quaesars (false positive rate)."
 
 # ╔═╡ f172c447-91ac-4e43-96e1-75d9689c1c0a
 begin
@@ -178,7 +178,7 @@ begin
 end;
 
 # ╔═╡ ba228583-b2af-47a0-bbc5-01235ea52fa5
-corner(DataFrame([view(Xₜ_kernel, i, :) for i in 1:size(Xₜ_kernel, 1)], 
+corner(DataFrame([view(Xₜ_kernel, i, :) for i in 1:size(Xₜ_kernel, 1)],
 	             ["KPCS " * string(i) for i in 1:size(Xₜ_kernel,1)])  )
 
 # ╔═╡ 75ef65ba-8bce-4eac-b6b9-cbf91da8d4f1
@@ -253,8 +253,8 @@ br = html"<br>";
 # ╔═╡ a53948d8-9deb-4802-9ab9-151e3f938070
 md"""
 # Lab 8: Dimesional Reduction $br Applying PCA to Astronomical Data
-## [Penn State Astroinformatics Summer School 2022](https://sites.psu.edu/astrostatistics/astroinfo-su22-program/)
-## Kadri Nizam & [Eric Ford](https://www.personal.psu.edu/ebf11)
+#### [Penn State Astroinformatics Summer School 2022](https://sites.psu.edu/astrostatistics/astroinfo-su22-program/)
+#### Kadri Nizam & [Eric Ford](https://www.personal.psu.edu/ebf11)
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001

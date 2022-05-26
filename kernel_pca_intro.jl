@@ -28,17 +28,17 @@ end
 # ╔═╡ eaf77309-f4de-44e0-887c-c80bb8836782
 md"""
 # Lab 7: Dimesional Reduction $br Intro to Kernel PCA
-### [Penn State Astroinformatics Summer School 2022](https://sites.psu.edu/astrostatistics/astroinfo-su22-program/)
-### Kadri Nizam 
+#### [Penn State Astroinformatics Summer School 2022](https://sites.psu.edu/astrostatistics/astroinfo-su22-program/)
+#### Kadri Nizam
 """
 #& [Eric Ford](https://www.personal.psu.edu/ebf11)
 
 # ╔═╡ 24e5c6b1-4444-4f5e-bcd3-5f47b62de3ac
 md"""
 # Kernel Principal Component Analysis
-In the [!previous notebook](./pca_intro.jl) we discussed dimensionality reduction using principal component analysis. This notebook will build off from that notebook, so it is advisable to start there if you have not! 
+In the Introduction to PCA lab we discussed dimensionality reduction using principal component analysis. This notebook will build off from that notebook, so it is advisable to start there if you have not!
 
-We found that a limitation of PCA is that it is a **linear** method. Presented with an example data where the only way to separate two subsets of the data involves a non-linear function, apply the standard PCA method won't change the fact that the two subsets can't be separated with a line (or plane), even though the two subsets are obviously grouped data.  To see this, let's look at an example from a previous notebook (adapted from [Scikit-Learn](https://github.com/scikit-learn/scikit-learn/blob/95d4f0841/sklearn/datasets/_samples_generator.py#L649)'s `sample-generator.py`).
+We found that a limitation of PCA is that it is a **linear** method. Presented with an example data where the only way to separate two subsets of the data involves a non-linear function, applying the standard PCA method won't change the fact that the two subsets can't be separated with a line (or plane), even if the two subsets are obviously grouped data.  To see this, let's look at an example from a previous notebook (adapted from [Scikit-Learn](https://github.com/scikit-learn/scikit-learn/blob/95d4f0841/sklearn/datasets/_samples_generator.py#L649)'s `sample-generator.py`).
 """
 
 # ╔═╡ 2dbe6d11-f25d-4dd7-9ce2-502ce71401b0
@@ -48,7 +48,7 @@ We fit fit a PCA model.
 
 # ╔═╡ 798ea5d8-7c4b-43b3-b227-5cb0e5056c61
 md"""
-**Question 1:**  What do you think the data will look like once projected on to the prinipcal component vectors?
+**Question 1:**  What do you think the data will look like once projected on to the principal component vectors?
 
 Check when you're ready to test your prediction: $(@bind ready1 CheckBox())
 """
@@ -62,12 +62,12 @@ end
 
 # ╔═╡ 8da2fa0c-1813-4908-b8fd-f17390e2971a
 md"""
-Fortunately, the PCA approach is quite versatile and can be modified to address this limitation. 
+Fortunately, the PCA approach is quite versatile and can be modified to address this limitation.
 
 ### Mapping to a higher dimension
-A standard approach to linearize non-linear data is to transform the current space to a more favourable one. You most likely have encountered this before in the context of linear regression; an exponential function can easily be fitted with a first order polynomial after performing a log-transform on the $y$ values. 
+A standard approach to linearize non-linear data is to transform the current space to a more favorable one. You most likely have encountered this before in the context of linear regression; an exponential function can easily be fitted with a first order polynomial after performing a log-transform on the $y$ values.
 
-In our particular example, a nice approach is to transform the space via the mapping ``\phi(\mathbf{x}) = \phi([\mathbf{x}_0,\,\mathbf{x}_1]^\intercal) \mapsto [\mathbf{x}_0^2,\,\mathbf{x}_1^2]^\intercal``. In this new space -- known in the industry as the _feature space_ - our data becomes linearly separable. 
+In our particular example, a nice approach is to transform the space via the mapping ``\phi(\mathbf{x}) = \phi([\mathbf{x}_0,\,\mathbf{x}_1]^\intercal) \mapsto [\mathbf{x}_0^2,\,\mathbf{x}_1^2]^\intercal``. In this new space -- known in the industry as the _feature space_ - our data becomes linearly separable.
 
 See the animation below to further build your intuition.
 """
@@ -113,7 +113,7 @@ md"""
 md"""
 Notice that the clusters can end up being not linearly separable when the center of the Gaussian mapping changes.
 
-An approach to overcoming this with real world data is via trial-and-error. Perform mappings centered at random points in our dataset; on each we perform PCA until we find a mapping that cleanly separates the data. While this would work, such approach could (read: would) be computationally infeasible/expensive with large datasets or complicated mappings. It is also not automation friendly. 
+An approach to overcoming this with real world data is via trial-and-error. Perform mappings centered at random points in our dataset; on each we perform PCA until we find a mapping that cleanly separates the data. While this would work, such approach could (read: would) be computationally infeasible/expensive with large datasets or complicated mappings. It is also not automation friendly.
 
 Good thing we have another trick up our mathematical sleeves. 🍿
 """
@@ -125,8 +125,8 @@ md"""
 As we have seen in the PCA lab, the heart of the algorithm lies on the fact that we can project one vector onto another via the dot product. The dot product defined on $\mathbb{R}^N$, however, is a specialized case of a more general mathematical idea -- the [inner product](https://en.wikipedia.org/wiki/Inner_product_space). There are many ways one can define what it means for one vector to be "similar" to/"projected" onto another vector in different abstract spaces.
 
 Why are we going on this mathematical digression?
-Because this allows us to bypass the need to map our data into a higher dimensional space at all! 
-We instead modify the PCA algorithm to use the inner product **from the space of ``\phi``** in our current space. 
+Because this allows us to bypass the need to map our data into a higher dimensional space at all!
+We instead modify the PCA algorithm to use the inner product **from the space of ``\phi``** in our current space.
 
 More concretely, PCA diagonalizes the covariance matrix ``C``
 ```math
@@ -141,7 +141,7 @@ Evidently, the only thing we need in order to classify non-linear data is **the 
 
 # ╔═╡ 220ed3c0-0986-4f1a-89dd-1b97f389a482
 md"""
-We will define a _radial basis function_ kernel. 
+We will define a _radial basis function_ kernel.
 """
 
 # ╔═╡ 86062d38-0fa1-4548-b0f5-78361f8e89d2
@@ -178,7 +178,7 @@ function make_circles(; n_samples::Integer=100, shuffle=true, factor=0.2)
     X[1, n_samples_out+1:end] = factor*cos.(LinRange(0, 2π, n_samples_in))
     X[2, n_samples_out+1:end] = factor*sin.(LinRange(0, 2π, n_samples_in))
     y[n_samples_out+1:end] .= 1
-	
+
 	if shuffle
        ind = randperm(n_samples)
        return X[:, ind], y[ind]
@@ -206,7 +206,7 @@ end
 # ╔═╡ 141af6d8-25aa-4f01-92e7-f85760c86af0
 begin
 	local ϕ
-	
+
 	ϕ = (X, γ) -> exp.(-γ*norm.(eachcol(X .- values)).^2)[:]
 	plot(X[1, :], X[2, :], ϕ(X, 2), marker_z=labels, seriestype=:scatter, color=:RdBu_4, legend=false, markersize=5, aspect_ratio=:equal, title="Gaussian centered at: ($(values[1]), $(values[2]))")
 	xlims!(-1, 1)
@@ -270,7 +270,7 @@ PlutoUI = "~0.7.39"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.7.2"
+julia_version = "1.7.0"
 manifest_format = "2.0"
 
 [[deps.AbstractPlutoDingetjes]]
