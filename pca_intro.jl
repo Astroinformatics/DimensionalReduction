@@ -28,7 +28,7 @@ end;
 
 # ╔═╡ d8f18c3f-1b9e-4bde-88f4-c407703fba27
 md"""
-In previous lessons, we explored machine learning approaches to regression and classification.  Now, we'll steer our attention to using machine learning algorithms for _dimensional reduction_. Dimensional reduction allows us to transform high dimensional data into lower dimensional manifolds subject to a some constraints.
+In previous lessons, we explored machine learning approaches to regression and classification.  Now, we'll steer our attention to using machine learning algorithms for _dimensional reduction_. Dimensional reduction allows us to transform high dimensional data into lower dimensional manifolds subject to some constraints.
 
 There are several algorithms for dimensional reduction that impose different constraints.  In this notebook, we'll start with one of the most common, [**Principal Component Analysis (PCA)**](https://en.wikipedia.org/wiki/Principal_component_analysis).  
 In future lessons, we'll explore [Kernel PCA](https://en.wikipedia.org/wiki/Kernel_principal_component_analysis), [autoencoders](https://en.wikipedia.org/wiki/Autoencoder) and T-Stochastic Neighbour Embedding [T-SNE, "tee-snee"](https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding).  
@@ -42,7 +42,7 @@ Principal component analysis is a computationally inexpensive and flexible unsup
 """
 
 # ╔═╡ 910e68dc-791a-4b91-b557-32d963f20311
-md"As usual, is good to start by visualizing our dataset."
+md"As usual, it is good to start by visualizing our dataset."
 
 # ╔═╡ ee8976d2-ccbd-43bc-854a-c2772892b2c4
 md"""
@@ -52,7 +52,7 @@ In the Linear Regression lab, we sought to find a way to train a model to make _
 # ╔═╡ 768d7d6f-300c-4da5-83cd-aa4e2854f836
 md"""
 ### Applying PCA
-A great way to develop intuition for what PCA does is run it on some simulated datasets and see what it does. For now, we'll utilize a Julia package,  [MultivariateStats.jl](https://github.com/JuliaStats/MultivariateStats.jl), so as to avoid being distracted by implementing the PCA algorithm.   The package provides the `fit` function that takes two arguments, an algorithm and a dataset.  We'll pass `PCA` to specify that's the algorithm we want it to use, and rearrange our data into a matrix with variables in the rows and observations in the columns.
+A great way to develop intuition for what PCA does is to run it on some simulated datasets and see what it does. For now, we'll utilize a Julia package,  [MultivariateStats.jl](https://github.com/JuliaStats/MultivariateStats.jl), so as to avoid being distracted by implementing the PCA algorithm.   The package provides the `fit` function that takes two arguments, an algorithm and a dataset.  We'll pass `PCA` to specify that's the algorithm we want it to use, and rearrange our data into a matrix with variables in the rows and observations in the columns.
 
 Since our dataset has $N$ datapoints, each with two variables $x_1$ and $x_2$, we will combine them into a single ``N\times 2`` matrix and take its transpose to produce a ``2 \times N`` matrix called $X$.
 """
@@ -112,7 +112,7 @@ md"### Checking orthogonality numerically"
 
 # ╔═╡ 28b7f757-5865-4d32-b65c-8942dc83aed2
 md"""
-We can check for orthogonality numerically by left multiplying the matrix with its transpose.  If they orthogonal, then we expect to see an identity matrix (or something very close due to floating point arithmetic).  This test is particularly useful once you start working in higher dimensions.
+We can check for orthogonality numerically by left multiplying the matrix with its transpose.  If they are orthogonal, then we expect to see an identity matrix (or something very close due to floating point arithmetic).  This test is particularly useful once you start working in higher dimensions.
 """
 
 # ╔═╡ b156b404-b446-4663-886c-caff23ce19b7
@@ -180,9 +180,8 @@ md"""
 **Question:** What happens if you set the true scatter to be smaller?  very small?
 
 !!! hint "Hint"
-    The `fit` function only returns enough principal component to explain a specified fraction of the total variance (by default 99%).  When the true scatter is sufficiently small, the number of principal component needed to explain nearly all of the variation decreases.
+    The `fit` function only returns enough principal components to explain a specified fraction of the total variance (by default 99%).  When the true scatter is sufficiently small, the number of principal components needed to explain nearly all of the variation decreases.
 
-Before proceeding, reset the true slope to 1 and true scatter to 0.2.  
 """
 
 
@@ -207,7 +206,7 @@ principalvars(model)
 
 # ╔═╡ 1ef8c7d6-6e08-42a5-ac38-e2de50b5337d
 md"""
-It make sense that the first component has the most variation, since it is pointing along the linear curve.  More useful is to rewrite these values as a fraction of the total variance.
+It makes sense that the first component has the most variation, since it is pointing along the linear curve.  What's more useful is to rewrite these values as a fraction of the total variance.
 """
 
 # ╔═╡ b2bff415-d191-4457-9aa9-8b6fc9650d88
@@ -220,14 +219,14 @@ per_var = (length(principalvars(model))==2) ? round.(principalvars(model)./tprin
 md"""
 We can now see that the first principal component accounts for about $(per_var[1])% of variations in our dataset while the second principal component only accounts for about $(per_var[2])%. This means, if we reconstructed our data using only the first component, then the resulting dataset would have $(per_var[1])% of the variance of the original dataset.
 
-**Question:**  How do expect the principal variances will change as you decrease the true scatter or increase the slope?
+**Question:**  How do expect the principal variances to change as you decrease the true scatter or increase the slope?
 
 """
 
 # ╔═╡ e8a5b5e3-9645-4f78-9bca-897493bc82f0
 md"""
 ### Changing the criteria for picking number of principal components
-In fact, the `fit` function takes an option argument `pratio` that allows us to specify that we want it to return the smallest number of principal components that account for a given fraction of the total variance in your dataset.
+In fact, the `fit` function takes an optional argument `pratio` that allows us to specify that we want it to return the smallest number of principal components that account for a given fraction of the total variance in your dataset.
 
 Imagine if you had a dataset with 1000 variables per observation (e.g., a spectra).  It's likely that you can account for 99% of variations in your dataset with a number of principal components much less than the number of observations (e.g., number of pixels in each spectra).  By reducing the dimension of your dataset, it becomes practical to work with datasets containing more objects and/or to apply more computationally expensive algorithms to an existing dataset!
 """
@@ -265,7 +264,7 @@ end
 
 # ╔═╡ f1ad53ca-363f-4007-86cb-55959c37356b
 md"""
-**Question:**  How does the the reconstructed data compare to the original data, if you set `pratio` to be near 1?
+**Question:**  How does the reconstructed data compare to the original data, if you set `pratio` to be near 1?
 
 **Question:**  How does the the reconstructed data compare to the original data, if you reduce `pratio`?
 
@@ -275,7 +274,7 @@ md"""
 # ╔═╡ af42e120-aaa4-427c-99b3-dd7218bd19a4
 md"""
 ## Next steps
-- Can you think of how dimensional reduction algorithm like PCA might be applicable to your research interests?
+- Can you think of how dimensional reduction algorithms like PCA might be applicable to your research interests?
 - What complications might arise with vanilla PCA?  
 - If you're interested in further building your intuition for PCA, experiment with the excellent applet [setosa.io](https://setosa.io/ev/principal-component-analysis/).
 """

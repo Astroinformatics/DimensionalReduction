@@ -36,7 +36,7 @@ end;
 md"""
 ### Overivew
 
-In this lesson, we'll explore what happens when we use PCA to transforms the high-${z}$ quasar dataset from the previous regression labs.  
+In this lesson, we'll explore what happens when we use PCA to transform the high-${z}$ quasar dataset from the previous regression labs.  
 """
 
 # ╔═╡ d2424607-7e22-49a9-ae6f-212364dffa44
@@ -131,7 +131,7 @@ end
 # ╔═╡ 8d39ca66-a14e-4852-ba70-eda1d2eb2879
 md"""Next, we'll fit an SVM classifier to the data after being transformed by PCA.
 
-**Question:** Do you expect the performance of this classifier will differ from that above?  
+**Question:** Do you expect the performance of this classifier to differ from that above?  
 If so, do you expect it to be better or worse?  If not, why not?
 """
 
