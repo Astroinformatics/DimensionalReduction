@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.5
+# v0.19.4
 
 using Markdown
 using InteractiveUtils
@@ -105,6 +105,15 @@ md"### Kernel PCA"
 # ╔═╡ 0d1b5789-7e32-4c5c-99c5-a8f4037c9873
 md"γ (Exponent for radial basis function): $(@bind kpca_gamma confirm(NumberField(0.05:0.05:2, default=0.5)))"
 
+# ╔═╡ 3a5e0c08-a984-4e47-8e6a-9a47f01ca678
+md"""
+**Question:**  Did Kernel PCA (as opposed to standard PCA) result in PCA finding a more efficient representation of our dataset for this problem?
+
+**Question:**  Was there a reason to expect that using a radial basis kernel would improve the ability of PCA to explain a large fraction of this dataset's variance with a small number of basis vectors?
+
+**Question:**  Is it possible that another choice of kernel function might prove more useful for analyzing this dataset?  
+"""
+
 # ╔═╡ 1cdab078-297d-498a-8d31-aa3682d57151
 md"## Fit SVM classifers"
 
@@ -154,10 +163,23 @@ md"""Now, we'll fit an SVM classifier using the data transformed into a new mani
 Ready to see what happens? $(@bind ready_svm_kpca CheckBox())
 """
 
+# ╔═╡ ddc038c3-6e47-443b-a564-95e1d305ff20
+md"""
+## Next Steps
+- If you're ambitous, consider trying an alternative kernel function with PCA.  Code for for a few common kernel functions used by Kernel PCA appears at the bottom of the notebook.  You'll want to change the value of the optional named parameter `kernel` in the line `fit(KernelPCA, data_train; kernel=kernel_radial,  inverse=true)` above.  You could try tinkering with the parameters of the polynomial kernel or writing your own kernel function.  If you find a kernel function that appears works well, then please share your success on the slack channel.
+
+- Our final dimensional reduction lab (`application_to_galaxy_images.ipynb`, in the form of a Jupyter notebook) will demonstrate combining PCA and SVMs for analyzing astronomical images.
+
+- For an example of a succesful astronomical application of SVMs in the astronomical literature, see [Lochner et al. (2016)](https://ui.adsabs.harvard.edu/abs/2016ApJS..225...31L/abstract).  It compares several machine learning methods in the context of automatically classifying supernovae based on photometry alone (i.e., without spectroscopic redshift measurements).
+"""
+
 # ╔═╡ e9f8d3f7-ae46-4793-8eac-fd8ad711e4f7
 md"""
 ## Setup & Helper code
 """
+
+# ╔═╡ b7edbfd3-9196-4f9e-ae7b-2291cd7147da
+TableOfContents()
 
 # ╔═╡ 0118ef60-7422-493f-8fee-ca90a594c967
 begin
@@ -166,7 +188,6 @@ begin
 	kpca_d = 2
 	kernel_polynomial = (x,y)->(x'y+kpca_c)^kpca_d
 	kernel_radial = (x,y)->exp(-kpca_gamma.*norm(x-y)^2)
-	#kernel_to_use = kernel_radial
 end
 
 # ╔═╡ 14f8cc90-2610-47d0-bc4e-702a40fd20d7
@@ -189,7 +210,7 @@ let
 	cfve_kernel = cumsum(model_kernel.:λ)/sum(model_kernel.:λ)
 	plot!(plt,cfve_kernel, lc=2, label=:none)
 	scatter!(plt,cfve_kernel, mc=2, label="Kernel PCA", legend=:bottomright)
-	xlabel!("Number Principal Compoents")
+	xlabel!("Number Principal Components")
 	ylabel!("Fraction of variance explained")  # TODO:  Check if this is the right label for kernel PCA?
 	ylims!(0,1)
 end
@@ -1424,6 +1445,7 @@ version = "0.9.1+5"
 # ╟─741f93ea-4023-439f-a35a-77c172e84b92
 # ╟─b64a6fa7-4781-439d-8edf-e7f01ae7f014
 # ╟─75ef65ba-8bce-4eac-b6b9-cbf91da8d4f1
+# ╟─3a5e0c08-a984-4e47-8e6a-9a47f01ca678
 # ╟─1cdab078-297d-498a-8d31-aa3682d57151
 # ╟─7ff72df3-eb8d-401a-8d22-70c2180c3562
 # ╠═98bcdb6b-cb0f-487d-8d45-d1d401e38acb
@@ -1434,10 +1456,12 @@ version = "0.9.1+5"
 # ╟─41f8d92a-d184-4387-9027-5bd44786792d
 # ╟─a4c41470-bc8a-4141-a934-af90b9b29c45
 # ╟─1af16c3f-739c-4d2e-95c4-d962491d09c6
+# ╟─ddc038c3-6e47-443b-a564-95e1d305ff20
 # ╟─e9f8d3f7-ae46-4793-8eac-fd8ad711e4f7
 # ╠═69cd367a-959e-11ec-1d11-dbb242dc1861
-# ╟─0118ef60-7422-493f-8fee-ca90a594c967
-# ╠═30a05385-d378-4299-88bc-402967d67187
-# ╠═f879a7de-5344-4329-9fe3-6f67e35fab58
+# ╠═b7edbfd3-9196-4f9e-ae7b-2291cd7147da
+# ╠═0118ef60-7422-493f-8fee-ca90a594c967
+# ╟─30a05385-d378-4299-88bc-402967d67187
+# ╟─f879a7de-5344-4329-9fe3-6f67e35fab58
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

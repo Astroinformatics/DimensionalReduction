@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.5
+# v0.19.4
 
 using Markdown
 using InteractiveUtils
@@ -152,13 +152,18 @@ PCA yielded a subspace where the classes are separated well.  Data transformed i
 # ╔═╡ 0bfa7bb5-c003-4b85-b120-529a3ab58f58
 md"""
 ### Next Steps
-Learning about Kernel PCA will help you develop intuition that will be useful for SVMs.
+- Kernel PCA is just one example of using the ["kernel trick"](https://en.wikipedia.org/wiki/Kernel_method#Mathematics:_the_kernel_trick).  Learning about Kernel PCA will help you develop intuition that will be useful for understanding how to apply [_Support Vector Machines_](https://en.wikipedia.org/wiki/Support-vector_machine) (SVMs) using the kernel trick.
 
-Or if you are already familiar with [_Support Vector Machines_](https://en.wikipedia.org/wiki/Support-vector_machine) (SVMs), then you may be able to draw parallels between Kernel PCA and SVMs in the discussion from this lab.
+- Or if you are already familiar with the use of SVMs, then you may be able to draw parallels between Kernel PCA and SVMs (that use the kernel trick) in the discussion from this lab.
+
+- If you're interested in seeing an application in the astrophysics literature, see [Amaya et al. (2020)](https://ui.adsabs.harvard.edu/abs/2020FrASS...7...66A/abstract).
 """
 
 # ╔═╡ fab26e8e-f3a2-4bea-996c-8495e0f6ea5d
 md"## Setup & Helper functions"
+
+# ╔═╡ 5bb95970-d87c-451d-9ce2-7772bcec6daa
+TableOfContents()
 
 # ╔═╡ 1d11ce68-e38d-400f-9473-247d518b4f98
 function make_circles(; n_samples::Integer=100, shuffle=true, factor=0.2)
@@ -1242,6 +1247,7 @@ version = "0.9.1+5"
 # ╟─0bfa7bb5-c003-4b85-b120-529a3ab58f58
 # ╟─fab26e8e-f3a2-4bea-996c-8495e0f6ea5d
 # ╟─6a3016c8-aa11-11ec-3658-0ff8413852e2
+# ╠═5bb95970-d87c-451d-9ce2-7772bcec6daa
 # ╟─1d11ce68-e38d-400f-9473-247d518b4f98
 # ╟─19d152a8-d592-499f-a3d9-168f8dae4ea1
 # ╟─00000000-0000-0000-0000-000000000001
