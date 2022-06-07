@@ -286,6 +286,8 @@ md"""
 ## Additional Resources
 - [PCA Tutorial by Jon Shlens](https://www.cs.princeton.edu/picasso/mats/PCA-Tutorial-Intuition_jp.pdf)
 - If you're interested in further building your intuition for PCA, experiment with the excellent applet [setosa.io](https://setosa.io/ev/principal-component-analysis/).
+- There are many, many applications of PCA in the astronomical literature.  A couple of early examples are [Deeming (1964)](https://ui.adsabs.harvard.edu/abs/1964MNRAS.127..493D/abstract) and [Faber (1973)](https://ui.adsabs.harvard.edu/abs/1973ApJ...179..731F/abstract).   
+- In modern astroinformatics, PCA is often used as in early pre-processing step to transform the data into features that can be used by other machine learning methods.
 """
 
 
