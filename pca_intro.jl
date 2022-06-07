@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.5
+# v0.19.4
 
 using Markdown
 using InteractiveUtils
@@ -23,7 +23,7 @@ begin
 	using PlutoUI
 	using Random
 	using Statistics
-
+	using HypertextLiteral
 end;
 
 # ╔═╡ d8f18c3f-1b9e-4bde-88f4-c407703fba27
@@ -31,7 +31,7 @@ md"""
 In previous lessons, we explored machine learning approaches to regression and classification.  Now, we'll steer our attention to using machine learning algorithms for _dimensional reduction_. Dimensional reduction allows us to transform high dimensional data into lower dimensional manifolds subject to some constraints.
 
 There are several algorithms for dimensional reduction that impose different constraints.  In this notebook, we'll start with one of the most common, [**Principal Component Analysis (PCA)**](https://en.wikipedia.org/wiki/Principal_component_analysis).  
-In future lessons, we'll explore [Kernel PCA](https://en.wikipedia.org/wiki/Kernel_principal_component_analysis), [autoencoders](https://en.wikipedia.org/wiki/Autoencoder) and T-Stochastic Neighbour Embedding [T-SNE, "tee-snee"](https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding).  
+PCA performs *linear* transformations of our data.  In future lessons, we'll explore additional methods for dimensional reduction can use non-linear transformations (e.g., [Kernel PCA](https://en.wikipedia.org/wiki/Kernel_principal_component_analysis), [autoencoders](https://en.wikipedia.org/wiki/Autoencoder) and T-Stochastic Neighbour Embedding [T-SNE, "tee-snee"](https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding)).  
 """
 # TODO? Add Uniform Manifold Approximation (UMAP). # maybe?
 
@@ -52,14 +52,17 @@ In the Linear Regression lab, we sought to find a way to train a model to make _
 # ╔═╡ 768d7d6f-300c-4da5-83cd-aa4e2854f836
 md"""
 ### Applying PCA
-A great way to develop intuition for what PCA does is to run it on some simulated datasets and see what it does. For now, we'll utilize a Julia package,  [MultivariateStats.jl](https://github.com/JuliaStats/MultivariateStats.jl), so as to avoid being distracted by implementing the PCA algorithm.   The package provides the `fit` function that takes two arguments, an algorithm and a dataset.  We'll pass `PCA` to specify that's the algorithm we want it to use, and rearrange our data into a matrix with variables in the rows and observations in the columns.
+Formally, PCA finds a linear transformation that diagonalizes the [sample covariance matrix](https://en.wikipedia.org/wiki/Covariance#Calculating_the_sample_covariance).  
+A great way to develop more intuition for what PCA does is to run it on some simulated datasets and see what it does. For now, we'll utilize a Julia package,  [MultivariateStats.jl](https://github.com/JuliaStats/MultivariateStats.jl), so as to avoid being distracted by implementing the PCA algorithm.   The package provides the `fit` function that takes two arguments, an algorithm and a dataset.  We'll pass `PCA` to specify that's the algorithm we want it to use, and rearrange our data into a matrix with variables in the rows and observations in the columns.
 
 Since our dataset has $N$ datapoints, each with two variables $x_1$ and $x_2$, we will combine them into a single ``N\times 2`` matrix and take its transpose to produce a ``2 \times N`` matrix called $X$.
 """
 
 # ╔═╡ 840e003f-df3d-4fde-94b5-c819ebec9be9
 md"""
-Now we can call the `fit` function with `PCA` and `X` as the argument. Further documentation on syntax can be found [here](https://multivariatestatsjl.readthedocs.io/en/stable/pca.html).
+Now we can call the `fit` function with `PCA` and `X` as the argument. Further documentation on syntax can be found [here](https://multivariatestatsjl.readthedocs.io/en/stable/pca.html).  
+
+(Implementation Note:  This `fit` function assumes that each *column* of X is an observation (rather than the more typical format of each row of data storing one observations.  That's why we took the matrix transpose in the cell above.  Fortunately, Julia is very efficient about allowing users to transform matrices without triggering unnecessary copying of data.)
 """
 
 # ╔═╡ 79246181-26d4-436a-aad3-0709c965833a
@@ -219,7 +222,7 @@ per_var = (length(principalvars(model))==2) ? round.(principalvars(model)./tprin
 md"""
 We can now see that the first principal component accounts for about $(per_var[1])% of variations in our dataset while the second principal component only accounts for about $(per_var[2])%. This means, if we reconstructed our data using only the first component, then the resulting dataset would have $(per_var[1])% of the variance of the original dataset.
 
-**Question:**  How do expect the principal variances to change as you decrease the true scatter or increase the slope?
+**Question:**  How do you expect the principal variances to change as you decrease the true scatter or increase the slope?
 
 """
 
@@ -276,8 +279,15 @@ md"""
 ## Next steps
 - Can you think of how dimensional reduction algorithms like PCA might be applicable to your research interests?
 - What complications might arise with vanilla PCA?  
+"""
+
+# ╔═╡ 744b2603-6fb0-413d-9840-6a6a646159de
+md"""
+## Additional Resources
+- [PCA Tutorial by Jon Shlens](https://www.cs.princeton.edu/picasso/mats/PCA-Tutorial-Intuition_jp.pdf)
 - If you're interested in further building your intuition for PCA, experiment with the excellent applet [setosa.io](https://setosa.io/ev/principal-component-analysis/).
 """
+
 
 # ╔═╡ e9f8d3f7-ae46-4793-8eac-fd8ad711e4f7
 md"""
@@ -291,6 +301,35 @@ TableOfContents()
 function plot_arrow!(plt, v, offset = [0, 0])
 	quiver!(plt,[offset[1]], [offset[2]], quiver = ([v[1]], [v[2]]), linewidth=3)
 end
+
+# ╔═╡ 63b161f2-24f4-437e-b7f4-abb8bb4517cb
+function aside(x; v_offset=0)
+    @htl("""
+     <style>
+     @media (min-width: calc(700px + 30px + 300px)) {
+     	aside.plutoui-aside-wrapper {
+     		position: absolute;
+     		right: -11px;
+     		width: 0px;
+     	}
+     	aside.plutoui-aside-wrapper > div {
+     		width: 300px;
+     	}
+     }
+     </style>
+     <aside class="plutoui-aside-wrapper" style="top: $(v_offset)px">
+     	<div>
+     	$(x)
+     	</div>
+     </aside>
+     """)
+end
+
+# ╔═╡ 5847fa39-05bb-4c48-95c7-93a68b36b73d
+aside(md"""
+!!! tip "Pro Tip:  How to perform PCA"
+    The typical method for computing principal components (and the one used here) is the [Singular Value Decomposition (SVD)](https://en.wikipedia.org/wiki/Singular_value_decomposition) algorithm.  For a typical problem where you have many more observations ($N$) than the number of features being observed ($M$), the computational cost scales roughly as $\mathcal{O}(N\times~M^2)$.  For many problems this is a robust and efficient way to compute the PCA decomposition.  However, if you have a very large datasets, then the computational cost (or memory required) can become prohibitive.  In that case, it can be useful to compute a PCA decomposition using the [Power Iteration method](https://en.wikipedia.org/wiki/Power_iteration) (here's a [nice explanation](http://theory.stanford.edu/~tim/s15/l/l8.pdf)).  The power iteration method is particularly useful when you only want to compute the first few principal components of a large data set.
+""")
 
 # ╔═╡ 30a05385-d378-4299-88bc-402967d67187
 nbsp = html"&nbsp";
@@ -350,6 +389,7 @@ md"""
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+HypertextLiteral = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
 LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Markdown = "d6f4376e-aef5-505a-96c1-9c027394607a"
@@ -360,6 +400,7 @@ Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [compat]
+HypertextLiteral = "~0.9.4"
 LaTeXStrings = "~1.3.0"
 MultivariateStats = "~0.9.1"
 Plots = "~1.29.0"
@@ -1325,6 +1366,7 @@ version = "0.9.1+5"
 # ╟─1516cdc8-89fb-4398-96f0-aa6ef6114a02
 # ╟─ee8976d2-ccbd-43bc-854a-c2772892b2c4
 # ╟─768d7d6f-300c-4da5-83cd-aa4e2854f836
+# ╟─5847fa39-05bb-4c48-95c7-93a68b36b73d
 # ╠═07014ad5-eb58-447f-b902-07e1d81dff2f
 # ╟─840e003f-df3d-4fde-94b5-c819ebec9be9
 # ╠═6b490754-dd14-4cca-b77d-16d7cb0ab858
@@ -1362,11 +1404,13 @@ version = "0.9.1+5"
 # ╟─890f3052-7848-4b02-97f6-a9948c6d9bdf
 # ╟─f1ad53ca-363f-4007-86cb-55959c37356b
 # ╟─af42e120-aaa4-427c-99b3-dd7218bd19a4
+# ╟─744b2603-6fb0-413d-9840-6a6a646159de
 # ╟─e9f8d3f7-ae46-4793-8eac-fd8ad711e4f7
 # ╠═69cd367a-959e-11ec-1d11-dbb242dc1861
 # ╠═7dc4f9f7-ee82-4af1-81cf-41201fdbdfd1
 # ╟─55829368-871a-4c4c-9fb4-0582832363a4
 # ╟─b8b39dc2-d44f-45f5-9094-ac8299d9ccec
+# ╟─63b161f2-24f4-437e-b7f4-abb8bb4517cb
 # ╟─30a05385-d378-4299-88bc-402967d67187
 # ╟─d8964ca6-4e26-4aee-ad94-1412428158f1
 # ╟─00000000-0000-0000-0000-000000000001
