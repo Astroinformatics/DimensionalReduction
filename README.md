@@ -6,10 +6,10 @@
 ---
 
 This repository contains several computational notebooks: 
-- pca_intro.jl (Pluto notebook):  Provides an introduction to Principal Components Analysis in two dimensions.
-- kernel_pca_intro.jl (Pluto notebook):  Demonstrates how using a kernel allows PCA to separate clusters of points when standard PCA can not.
-- pca_apply.jl (Pluto notebook):  Demonstrates combining PCA with SVM to classify high-redshift quasars.
-- application_to_galaxy_images.ipynb (Jupyter notebook): Demonstrates combining PCA, radial basis function kernel, and SVM to classify galaxy images. 
+- pca_intro.jl ([Pluto notebook](https://astroinformatics.github.io/DimensionalReduction/pca_intro.jl.html)):  Provides an introduction to Principal Components Analysis in two dimensions.
+- kernel_pca_intro.jl ([Pluto notebook](https://astroinformatics.github.io/DimensionalReduction/kernel_pca_intro.jl.html)):  Demonstrates how using a kernel allows PCA to separate clusters of points when standard PCA can not.
+- pca_apply.jl ([Pluto notebook](https://astroinformatics.github.io/DimensionalReduction/pca_apply.jl.html)):  Demonstrates combining PCA with SVM to classify high-redshift quasars.
+- application_to_galaxy_images.ipynb ([Jupyter notebook]([application_to_galaxy_images.ipynb](https://github.com/Astroinformatics/DimensionalReduction/blob/main/application_to_galaxy_images.ipynb))): Demonstrates combining PCA, radial basis function kernel, and SVM to classify galaxy images. 
 
 Most students will want to proceed in the order above.  Students already confident in their understanding of PCA and Kernel PCA are welcome to jump to the applicaitons.
 
