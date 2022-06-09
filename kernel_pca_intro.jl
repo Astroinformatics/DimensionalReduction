@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.4
+# v0.19.6
 
 using Markdown
 using InteractiveUtils
@@ -136,7 +136,7 @@ where ``⟨\mathbf{x}_i,\,\mathbf{x}_j⟩`` denotes the inner product between ve
 ```math
     C' = \dfrac{1}{N}\sum_{i=1}^N \phi(\mathbf{x}_i)\phi(\mathbf{x}_i)^\intercal = \dfrac{1}{N}\sum_{i=1}^N K(\mathbf{x}_i,\, \mathbf{x}_j)
 ```
-Evidently, the only thing we need in order to classify non-linear data is **the inner product equipped on ``\phi``** and not ``\phi`` itself. This is known as the _kernel trick_ and $K(\mathbf{x}_i,\, \mathbf{x}_j) = ⟨\phi(\mathbf{x}_i),\,\phi(\mathbf{x}_j)\rangle$ is known as the [_kernel function_](https://en.wikipedia.org/wiki/Positive-definite_kernel).
+Evidently, the only thing we need in order to classify non-linear data is **the inner product evaluated on ``\phi``** and not ``\phi`` itself. This is known as the _kernel trick_ and $K(\mathbf{x}_i,\, \mathbf{x}_j) = ⟨\phi(\mathbf{x}_i),\,\phi(\mathbf{x}_j)\rangle$ is known as the [_kernel function_](https://en.wikipedia.org/wiki/Positive-definite_kernel).  
 """
 
 # ╔═╡ 220ed3c0-0986-4f1a-89dd-1b97f389a482
@@ -160,7 +160,7 @@ md"""
 """
 
 # ╔═╡ fab26e8e-f3a2-4bea-996c-8495e0f6ea5d
-md"## Setup & Helper functions"
+md"# Setup & Helper functions"
 
 # ╔═╡ 5bb95970-d87c-451d-9ce2-7772bcec6daa
 TableOfContents()

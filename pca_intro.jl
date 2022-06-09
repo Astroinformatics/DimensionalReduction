@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.4
+# v0.19.6
 
 using Markdown
 using InteractiveUtils
@@ -28,7 +28,7 @@ end;
 
 # ╔═╡ d8f18c3f-1b9e-4bde-88f4-c407703fba27
 md"""
-In previous lessons, we explored machine learning approaches to regression and classification.  Now, we'll steer our attention to using machine learning algorithms for _dimensional reduction_. Dimensional reduction allows us to transform high dimensional data into lower dimensional manifolds subject to some constraints.
+In previous lessons, we explored machine learning approaches to regression and classification.  Now, we'll steer our attention to using machine learning algorithms for _dimensional reduction_. Dimensional reduction allows us to transform high dimensional data into lower dimensional manifolds subject to some constraints.  This can be useful for helping to build intuition for a high-dimensional data set.  It can also be useful for reducing the computational cost of analyzing very large datasets.
 
 There are several algorithms for dimensional reduction that impose different constraints.  In this notebook, we'll start with one of the most common, [**Principal Component Analysis (PCA)**](https://en.wikipedia.org/wiki/Principal_component_analysis).  
 PCA performs *linear* transformations of our data.  In future lessons, we'll explore additional methods for dimensional reduction can use non-linear transformations (e.g., [Kernel PCA](https://en.wikipedia.org/wiki/Kernel_principal_component_analysis), [autoencoders](https://en.wikipedia.org/wiki/Autoencoder) and T-Stochastic Neighbour Embedding [T-SNE, "tee-snee"](https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding)).  
@@ -293,7 +293,7 @@ md"""
 
 # ╔═╡ e9f8d3f7-ae46-4793-8eac-fd8ad711e4f7
 md"""
-## Setup & Helper code
+# Setup & Helper code
 """
 
 # ╔═╡ 7dc4f9f7-ee82-4af1-81cf-41201fdbdfd1
