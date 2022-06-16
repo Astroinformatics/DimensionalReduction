@@ -136,7 +136,7 @@ In the standard ``\mathbb{R}^N`` space, the inner product is implicitly assumed 
 ```math
     C_\phi = \dfrac{1}{N} ⟨\phi(\mathbf{\xi}),\, \phi(\mathbf{\xi})^\intercal⟩_\phi = \dfrac{1}{N}\sum_{i=1}^N K(\mathbf{\xi}_i,\, \mathbf{\xi}_i^\intercal)
 ```
-Evidently, the only thing we need in order to classify non-linear data is **the inner product evaluated on ``\phi``** and not ``\phi`` itself. This is known as the _kernel trick_ and $K(\mathbf{x}_i,\, \mathbf{x}_j) = ⟨\phi(\mathbf{x}_i),\,\phi(\mathbf{x}_j)\rangle$ is known as the [_kernel function_](https://en.wikipedia.org/wiki/Positive-definite_kernel).  
+Evidently, the only thing we need in order to classify non-linear data is **the inner product evaluated on ``\phi``** and not ``\phi`` itself. This is known as the _kernel trick_ and ``K(\mathbf{x}_i,\, \mathbf{x}_j) = ⟨\phi(\mathbf{x}_i),\,\phi(\mathbf{x}_j)\rangle_\phi`` is known as the [_kernel function_](https://en.wikipedia.org/wiki/Positive-definite_kernel).  
 """
 
 # ╔═╡ 220ed3c0-0986-4f1a-89dd-1b97f389a482
