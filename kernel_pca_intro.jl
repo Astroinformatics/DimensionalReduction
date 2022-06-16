@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.6
+# v0.19.9
 
 using Markdown
 using InteractiveUtils
@@ -122,19 +122,19 @@ Good thing we have another trick up our mathematical sleeves. 🍿
 md"""
 ### Inner Products and Kernels
 
-As we have seen in the PCA lab, the heart of the algorithm lies on the fact that we can project one vector onto another via the dot product. The dot product defined on $\mathbb{R}^N$, however, is a specialized case of a more general mathematical idea -- the [inner product](https://en.wikipedia.org/wiki/Inner_product_space). There are many ways one can define what it means for one vector to be "similar" to/"projected" onto another vector in different abstract spaces.
+As we have seen in the PCA lab, the heart of the algorithm lies on the fact that we can project one vector onto another via the dot product. The dot product defined on $\mathbb{R}^N$, however, is a specialized case of a more general mathematical idea -- the [inner product](https://en.wikipedia.org/wiki/Inner_product_space). The dot product is not the only way to define an inner product. In fact, there are many ways one can define what it means for one vector to be "similar" to/"projected" onto another vector in different abstract spaces.
 
-Why are we going on this mathematical digression?
+How is this mathematical digression useful?
 Because this allows us to bypass the need to map our data into a higher dimensional space at all!
 We instead modify the PCA algorithm to use the inner product **from the space of ``\phi``** in our current space.
 
-More concretely, PCA diagonalizes the covariance matrix ``C``
+More concretely, PCA diagonalizes a covariance matrix ``C``. Let ``\mathbf{\xi} = \mathbf{x} - \overline{\mathbf{x}}`` be the zero-meaned vector of ``\mathbf{x}``. Then
 ```math
-  C = \dfrac{1}{N}\sum_{i=1}^N \mathbf{x}_i\mathbf{x}_i^\intercal
+  C = \dfrac{1}{N} ⟨\mathbf{\xi},\, \mathbf{\xi}^\intercal⟩ = \dfrac{1}{N} \sum_{i=1}^N \mathbf{\xi}_i\mathbf{\xi}_i^\intercal
 ```
-where ``⟨\mathbf{x}_i,\,\mathbf{x}_j⟩`` denotes the inner product between vectors ``\mathbf{x}_i`` and ``\mathbf{x}_j``. After mapping with $\phi$, the optimization problem looks identical with the only change being:
+In the standard ``\mathbb{R}^N`` space, the inner product is implicitly assumed to be the standard dot product i.e. ``⟨\mathbf{\xi},\, \mathbf{\xi}^\intercal⟩_{\mathbb{R}^N} = \mathbf{\xi} \cdot \mathbf{\xi}^\intercal``. After mapping with $\phi$, the optimization problem looks identical with the only change being:
 ```math
-    C' = \dfrac{1}{N}\sum_{i=1}^N \phi(\mathbf{x}_i)\phi(\mathbf{x}_i)^\intercal = \dfrac{1}{N}\sum_{i=1}^N K(\mathbf{x}_i,\, \mathbf{x}_j)
+    C_\phi = \dfrac{1}{N} ⟨\phi(\mathbf{\xi}),\, \phi(\mathbf{\xi})^\intercal⟩_\phi = \dfrac{1}{N}\sum_{i=1}^N K(\mathbf{\xi}_i,\, \mathbf{\xi}_i^\intercal)
 ```
 Evidently, the only thing we need in order to classify non-linear data is **the inner product evaluated on ``\phi``** and not ``\phi`` itself. This is known as the _kernel trick_ and $K(\mathbf{x}_i,\, \mathbf{x}_j) = ⟨\phi(\mathbf{x}_i),\,\phi(\mathbf{x}_j)\rangle$ is known as the [_kernel function_](https://en.wikipedia.org/wiki/Positive-definite_kernel).  
 """
@@ -275,7 +275,7 @@ PlutoUI = "~0.7.39"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.7.0"
+julia_version = "1.7.2"
 manifest_format = "2.0"
 
 [[deps.AbstractPlutoDingetjes]]
